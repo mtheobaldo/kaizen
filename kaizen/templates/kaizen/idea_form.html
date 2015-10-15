@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block 'title' %}{% if idea %}Update{% else %}Add{% endif %} A Suggestion{% endblock %}
+{% block content %}
+
+<h3>{% if idea %}Update{% else %}Add{% endif %} A Suggestion</h3>
+
+<form method="post" action=".">
+{% csrf_token %}
+{{ form|crispy }}
+<button type="submit">GoZen</button>
+</form>
+
+
+{% endblock %}

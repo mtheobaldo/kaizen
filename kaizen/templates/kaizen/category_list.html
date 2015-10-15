@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Categoryies</h1>
+  {% for cat in object_list %}
+  <div class="panel panel-default">
+  	<div class="panel-body">
+  		<a href="{% url 'kaizen:suggestion-list' %}category/{{ cat.pk }}">{{ cat.name }}</a>
+  	

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block 'title' %}{{ object.title }}{% endblock 'title' %}
+
+{% block content %}
+  {% if request.user.is_superuser %}
+  <p>admin options:<a href="{% url 'kaizen:delete' idea.id %}"> Delete --</a><a href="{% url 'kaizen:changestatus' idea.id %}">-- set status</a>{% endif %}
+  <h2>{{ idea.title }}</h2>
+  <p class="published">
+  	Posted by {{ idea.profile }} on {{ idea.pub_date }} in {{ idea.category }}</br>
+    Status: {{ idea.get_status_display }}{% if request.user.is_superuser %}
+<a href="{% url 'kaizen:changestatus' idea.id %}">set status</a>{% endif %}
+  </p>
+  <p class="well">
+  	{{ object.description }}
+  </p>
+  <p>user options{% ifequal idea.profile.user request.user %}<a href="{% url 'kaizen:editidea' idea.id %}" class="btn btn">Edit</a><a href="{% url 'kaizen:delete' idea.id %}">Delete</a>{% endifequal %}
+</p>
+
+  
+  
+  <h4>Comments</h4>
+<table id="comments" class="table table-bordered table-striped">
+{% for comment in idea.comment_set.all %}
+
+	<tr>
+		<td><p>{{ idea.profile }} commented on {{ comment.pub_date }}</p><p>{{ comment.comment_text }}</td></p>
+	</tr>
+{% empty %}
+<h6>no comments yet</h6>
+{% endfor %}
+</table>
+<a class="btn btn-default" href="{% url 'kaizen:comment' idea.id %}">Comment</a>
+
+
+{% endblock %}
